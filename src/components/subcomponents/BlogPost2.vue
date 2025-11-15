@@ -2,29 +2,34 @@
     export default {
         // Add code if/as necessary
         // Hint: Add properties subject, entry and mood
-        props: {
-            subject: String,
-            entry: String,
-            mood: String
+        props:{
+            blog: Object
         },
-        computed: {
-            imgLoc() {
-                return `/assets/${this.mood.toLowerCase()}.png`
+        computed:{
+            moodImage() {
+            if (this.blog.mood === 'Happy') {
+                return '../../public/assets/happy.png'
+            } 
+            else if (this.blog.mood === 'Sad') {
+                return '../../public/assets/sad.png'
+            } 
+            else if (this.blog.mood === 'Angry') {
+                return '../../public/assets/angry.png'
             }
+        }
         }
     }
 </script>
 
 
 <template>
-    <!-- TODO: add your template code here Use boostrap card --> 
-    <div class="card mb-2" style="width: 18rem;">
-        <img :src="imgLoc" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{ subject }}</h5>
-            <p class="card-text">{{ entry }}</p>
-            <slot></slot>
-        </div>
+    <!-- TODO: add your template code here. Use boostrap card --> 
+    <div class="card" style="width: 18rem;">
+    <img :src="moodImage" class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title">{{ blog.subject }}</h5>
+        <p class="card-text"> {{ blog.entry }}</p>
+        <slot></slot>
+    </div>
     </div>
 </template>
-
