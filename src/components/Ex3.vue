@@ -11,6 +11,9 @@
                 posts: [] // array of post objects
             }  
         },
+        components:{
+            blogPost
+        },  
         computed: {
             baseUrl() {
                 if (window.location.hostname == 'localhost')
@@ -35,20 +38,19 @@
         methods: {
             deletePost(id) {
                 // TODO: Complete the delete method
-                axios.get(`${this.baseUrl}/deletePost`, {
-                    params: {
-                        id: id
-                    }
+                axios.get(`${this.baseUrl}/deletePost`,{
+                        params:{
+                            id: id
+                        }
+                    })
+                    .then(response => {
+                        // this gets the data, which is an array
+                        console.log(response.data.message)
+                        this.posts = this.posts.filter(post => post.id != id)
+                    })
+                    .catch(error => {
+                        this.posts = [{ entry: 'There was an error: ' + error.message }]
                 })
-                .then(response => {
-                    // this gets the data, which is an array
-                    console.log(response.data.message)
-                    this.posts = this.posts.filter(post => post.id!=id)
-                        
-                })
-                .catch(error => {
-                    console.log(error)
-                })                
             }
         }
     }
@@ -56,8 +58,10 @@
 
 <template>
    <!-- TODO: make use of the 'blog-post' component to display the blog posts -->
-    <blog-post v-for="post in posts" :subject="post.subject" :entry="post.entry" :mood="post.mood" :key="post.id">
-        <button class="btn btn-primary" @click="deletePost(post.id)">Delete</button>
-    </blog-post>
+    <blogPost v-for="blog in posts"
+            :blog = "blog"
+            :key = "blog.id"
+            >
+            <button class="btn btn-primary" @click="deletePost(blog.id)">Delete</button>
+    </blogPost>
 </template>
-
