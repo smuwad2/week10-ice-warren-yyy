@@ -1,5 +1,5 @@
 <script>
-    import taskTracker from "./subcomponents/TaskTracker.vue"
+import TaskTracker from "./subcomponents/TaskTracker.vue"
     export default {
         data() {
             return {
@@ -8,23 +8,29 @@
                 taskList: []
             }
         },
+        components: {
+            TaskTracker
+        },
+
         methods: {
             add() {
-                this.taskList.push( { 'desc': this.desc, 'deadline': this.deadline } );
-                console.log(this.taskList);
-                this.desc = '';
-                this.deadline = '';
+                this.taskList.push( { 'desc': this.desc, 'deadline': this.deadline } )
+                this.desc = ''
+                this.deadline = ''
+                console.log(this.taskList); 
+                
             },
             // TODO: Add a new method, to delete a task completed
-            deletePost(description) {
-                this.taskList = this.taskList.filter(obj => obj.desc !== description);
-            }
-        },
-        components: {
-            taskTracker,
-        }
 
+            deleteTask(idx){
+                this.taskList.splice(idx,1) 
+            }
+            
+        }
+        
     }
+
+    
 
 </script>
 
@@ -38,16 +44,11 @@
         <input type="date" class="form-control" id="deadline" v-model='deadline' placeholder="deadline">
     </div>
 
-    <button type="button" @click="add()" class="btn btn-primary">Add New Task</button>
+    <button type="button" @click="add" class="btn btn-primary">Add New Task</button>
     <hr>
 
     <!-- TODO: Modify following code -->
-    <div class="row">
-        <task-tracker v-for="task in taskList" 
-        :taskObj="task"
-        :key="task.desc" class="col-4"><button class="btn btn-primary" @click="deletePost(task.desc)">Done</button></task-tracker>
-    </div>
-    
+    <task-tracker v-for="(task,idx) in taskList" :idx="idx" :task="task" @remove-task="deleteTask"></task-tracker>
 
 </template>
 
