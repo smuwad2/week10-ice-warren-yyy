@@ -1,24 +1,27 @@
 <script>
+    // TODO: Complete the code
     export default { 
         data() {
             return {
-                soundEmojis: ['🔇', '🔈', '🔉', '🔊']
+                
             }
         },
-        // TODO: add code to define a necessary prop
+        // Hint: insert properties task (Object) and idx (Number)
         props: {
-            level: Number
-        },
-
-       
-
-
+            taskObj: Object,
+        }
     }
 </script>
 
 <template>
-    <!-- TODO: add your template code here. Use span element. --> 
-     <span>{{ soundEmojis[level] }}</span>
-    
+    <!-- TODO: add your template code here --> 
+    <div class="card">
+        <div class="card-header" style="background-color: white;">
+            <h5>Deadline: {{taskObj.deadline}}</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ taskObj.desc }}</p>
+            <slot></slot>
+        </div>
+    </div>
 </template>
-
