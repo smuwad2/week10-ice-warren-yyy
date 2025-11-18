@@ -22,8 +22,8 @@ import TaskTracker from "./subcomponents/TaskTracker.vue"
             },
             // TODO: Add a new method, to delete a task completed
 
-            deleteTask(idx){
-                this.taskList.splice(idx,1) 
+            deletePost(description) {
+                this.taskList = this.taskList.filter(obj => obj.desc !== description);
             }
             
         }
@@ -48,7 +48,11 @@ import TaskTracker from "./subcomponents/TaskTracker.vue"
     <hr>
 
     <!-- TODO: Modify following code -->
-    <task-tracker v-for="(task,idx) in taskList" :idx="idx" :task="task" @remove-task="deleteTask"></task-tracker>
+    <div class="row">
+        <task-tracker v-for="task in taskList" 
+        :taskObj="task"
+        :key="task.desc" class="col-4"><button class="btn btn-primary" @click="deletePost(task.desc)">Done</button></task-tracker>
+    </div>
 
 </template>
 
